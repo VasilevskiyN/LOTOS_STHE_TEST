@@ -9,8 +9,6 @@ TUBE = {
          }
 
 
-
-
 class HeatExchanger:
     pipe_diameter = 20                  #int(input('Введите диаметр трубы, мм')) временно константа
     pipe_lengh = 1000                   #int(input('Введите длину трубы, мм')) временно константа
@@ -18,13 +16,11 @@ class HeatExchanger:
     GENERAL['pipe_diametr'] = pipe_diameter
     GENERAL['pipe_lengh'] = pipe_lengh
 
-
     def __init__(self, t1, t2, G, name):
         self.t1 = t1
         self.t2 = t2
         self.G = G
         self.name = name
-
 
     def surface(self):
         global SHELL, TUBE
@@ -45,9 +41,6 @@ class HeatExchangerSurface:
                math.log((SHELL['t1']-TUBE['t2'])/(SHELL['t2']-TUBE['t1'])))
         print('Проверка поверхности')
 
-
-
-
 class Condensation(HeatExchanger, HeatExchangerSurface):
     def __init__(self,t1, t2, G, name):
         super().__init__(t1, t2, G, name)
@@ -64,7 +57,6 @@ class Condensation(HeatExchanger, HeatExchangerSurface):
             TUBE = vars(self)
         self.surface()
 
-
 class PipeSpace(HeatExchanger, HeatExchangerSurface):
     def __init__(self, t1, t2, G, name):
         super().__init__(t1, t2, G, name)
@@ -80,7 +72,6 @@ class PipeSpace(HeatExchanger, HeatExchangerSurface):
             global TUBE
             TUBE = vars(self)
         self.surface()
-
 
 class InterpipeSpace(HeatExchanger, HeatExchangerSurface):
     def __init__(self, t1, t2, G, name):
