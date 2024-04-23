@@ -1,4 +1,5 @@
 import requests
+import time
 # Ниже указал действующие login // number для запуска кода
 # 1455 //19052013
 # 1877 // 28791562
@@ -23,3 +24,7 @@ API_URL='http://localhost:8000/initial_data'
 data =  {'t1':t1,'t2':t2,'T1':T1, 'T2':T2, 'g':g, 'G':G}
 result = requests.post(API_URL,params = data)
 print(result, result.text)
+
+API_URL='http://localhost:8000/TEMA'
+result2 = requests.get(API_URL)
+print(result2, result2.text)
