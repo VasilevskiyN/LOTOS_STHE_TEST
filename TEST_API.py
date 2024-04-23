@@ -28,3 +28,7 @@ print(result, result.text)
 API_URL='http://localhost:8000/TEMA'
 result2 = requests.get(API_URL)
 print(result2, result2.text)
+
+API_URL='http://localhost:8000/report/dashboard'
+result3 = requests.get(API_URL)
+print(result3)
