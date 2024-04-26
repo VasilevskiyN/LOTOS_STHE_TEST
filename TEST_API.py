@@ -1,11 +1,24 @@
 import requests
 import time
-# Ниже указал действующие login // number для запуска кода
-# 1455 //19052013
-# 1877 // 28791562
-# 1355 // 59843251
-# 9548 // 91245684
-# 6432 // 72648953
+import random
+
+r= random.randint(0, 4)
+a = [1455, 1877, 1355, 9548, 6432]
+b = {
+    '1455': 19052013,
+    '1877': 28791562,
+    '1355': 59843251,
+    '9548': 91245684,
+    '6432': 72648953
+}
+login = a[r]
+number = b[str(login)]
+T1 = random.randint(70, 100)
+T2 = random.randint(55, 65)
+t1 = random.randint(5, 15)
+t2 = random.randint(20, 35)
+g = random.randint(10, 50)
+G = random.randint(10, 50)
 #login = int(input('Введите login '))
 #number = int(input('Введите number '))
 #T1 = int(input('Введите температуру на входе горячего потока '))
@@ -13,14 +26,7 @@ import time
 #t1 = int(input('Введите температуру на входе холодного потока '))
 #t2 = int(input('Введите температуру на выходе холодного потока '))
 #g = int(input('Введите расход холодной среды '))
-login = 1877
-number = 28791562
-T1 = 70
-T2 = 55
-t1 = 10
-t2 = 35
-g = 5
-G = int(input('Введите расход горячей среды '))
+#G = int(input('Введите расход горячей среды '))
 
 API_URL='http://localhost:8000/license'
 data1 = {'login' : login, 'number' : number}
@@ -48,4 +54,4 @@ while "SUCCESS" not in task_status:
     time.sleep(5)
     task_status = result4.text
     print(task_status)
-print(f"Задача №{task_id} выполнена")
+print(f"Задача № {task_id} выполнена")
