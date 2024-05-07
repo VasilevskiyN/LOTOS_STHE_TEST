@@ -107,3 +107,6 @@ class Evaporation(HeatExchanger, HeatExchangerSurface):
 
 Shell = Condensation(105, 105, 50, 'Shell') #Все атрибуты кроме name, через input()
 Tube = PipeSpace(20, 30 ,100, 'Tube')       #Все атрибуты кроме name, через input()
+
+
+a, b = int(input.split())
