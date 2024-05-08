@@ -32,26 +32,15 @@ API_URL='http://localhost:8000/dashboard'
 data = {'login': login, 'number': number, 't1': t1, 't2': t2, 'T1': T1, 'T2': T2, 'g': g, 'G': G}
 result = requests.post(API_URL,params = data)
 print(f"Задача № {result.text} получена")
-API_URL1 = f'http://localhost:8000/task_status?task_id={result.text}'
-result1 = requests.get(API_URL1)
-prom = result1.text
-print(prom)
-print('-------')
-prom1 = result1
-print(result1)
-task_status = prom1['status']
-print(task_status)
-task_status=''
-while "SUCCEESS" not in task_status:
-    API_URL1 = f'http://localhost:8000/task_status?task_id={result.text}'
+task_id = result.text
+task_status = ""
+prom = {}
+while "SUCCESS" not in task_status:
+    API_URL1 = f'http://localhost:8000/result_status?task_id={task_id}'
     result1 = requests.get(API_URL1)
     time.sleep(10)
-    prom = result1.text
-    print(prom)
-    print('-------')
-    prom1 = result1
-    print(result1)
-    task_status = prom1['status']
+    prom = result1.json()
+    task_status = prom['status']
     print(task_status)
 print(f''' Задача: \n 
         Имя организации: {prom['org']} \n
@@ -60,9 +49,9 @@ print(f''' Задача: \n
         Температура горячей воды на входе: {prom['T1']} \n
         Температура горячей воды на выходе: {prom['T2']} \n
         Расход горячей воды: {prom['G']} \n
-        Температура холодной воды на входе: {t1} \n
-        Температура холодной воды на выходе: {t2} \n
-        Расход холодной воды: {g} \n
+        Температура холодной воды на входе: {prom['t1']} \n
+        Температура холодной воды на выходе: {prom['t2']} \n
+        Расход холодной воды: {prom['g']} \n
         Результаты расчета: \n
-        {N}
+        {prom['N']}
         ''')
