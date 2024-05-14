@@ -30,47 +30,30 @@ API_URL='http://localhost:8000/dashboard'
 data = {'login': login, 'number': number, 't1': t1, 't2': t2, 'T1': T1, 'T2': T2, 'g': g, 'G': G}
 result = requests.post(API_URL,params = data)
 print(f"Задача № {result.text} получена")
-API_URL1 = f'http://localhost:8000/task_status?task_id={result.text}'
+
+
+UUID = result.text
+API_URL1 = f'http://localhost:8000/task_status?task_id={UUID}'
 result1 = requests.get(API_URL1)
-prom = result1.text
-print(prom)
-print('-------')
-prom1 = result1
-print(result1)
-task_status = prom1['status']
-print(task_status)
-task_status=''
-while "SUCCEESS" not in task_status:
-    API_URL1 = f'http://localhost:8000/task_status?task_id={result.text}'
-task_id = result.text
-task_status = ""
-prom = {}
+prom = result1.json()
+task_status = prom['status'][0]
 while "SUCCESS" not in task_status:
-    API_URL1 = f'http://localhost:8000/result_status?task_id={task_id}'
     result1 = requests.get(API_URL1)
-    time.sleep(10)
-    prom = result1.text
-    print(prom)
-    print('-------')
-    prom1 = result1
-    print(result1)
-    task_status = prom1['status']
     prom = result1.json()
-    task_status = prom['status']
+    task_status = prom['status'][0]
     print(task_status)
-print(f''' Задача: \n
-        Имя организации: {prom['org']} \n
-        Номер задачи: {result.text} \n
-        Исходные данные: \n
-        Температура горячей воды на входе: {prom['T1']} \n
-        Температура горячей воды на выходе: {prom['T2']} \n
-        Расход горячей воды: {prom['G']} \n
-        Температура холодной воды на входе: {t1} \n
-        Температура холодной воды на выходе: {t2} \n
-        Расход холодной воды: {g} \n
-        Температура холодной воды на входе: {prom['t1']} \n
-        Температура холодной воды на выходе: {prom['t2']} \n
-        Расход холодной воды: {prom['g']} \n
-        Результаты расчета: \n
-        {prom['N']}
-        ''')
+    time.sleep(10)
+print(f'''
+Задача: \n
+Имя организации: {prom['org'][0]} 
+Номер задачи: {UUID} \n
+Исходные данные: \n
+Температура горячей воды на входе: {prom['T1'][0]} 
+Температура горячей воды на выходе: {prom['T2'][0]} 
+Расход горячей воды: {prom['G'][0]} 
+Температура холодной воды на входе: {prom['t1'][0]} 
+Температура холодной воды на выходе: {prom['t2'][0]} 
+Расход холодной воды: {prom['g'][0]} \n
+Результаты расчета: \n
+{prom['N'][0]}
+''')
