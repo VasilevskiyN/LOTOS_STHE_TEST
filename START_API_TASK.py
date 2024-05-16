@@ -29,31 +29,6 @@ G = random.randint(10, 50)
 API_URL='http://localhost:8000/dashboard'
 data = {'login': login, 'number': number, 't1': t1, 't2': t2, 'T1': T1, 'T2': T2, 'g': g, 'G': G}
 result = requests.post(API_URL,params = data)
-print(f"Задача № {result.text} получена")
+print(f"Задача {result.text} получена")
 
 
-UUID = result.text
-API_URL1 = f'http://localhost:8000/task_status?task_id={UUID}'
-result1 = requests.get(API_URL1)
-prom = result1.json()
-task_status = prom['status'][0]
-while "SUCCESS" not in task_status:
-    result1 = requests.get(API_URL1)
-    prom = result1.json()
-    task_status = prom['status'][0]
-    print(task_status)
-    time.sleep(10)
-print(f'''
-Задача: \n
-Имя организации: {prom['org'][0]} 
-Номер задачи: {UUID} \n
-Исходные данные: \n
-Температура горячей воды на входе: {prom['T1'][0]} 
-Температура горячей воды на выходе: {prom['T2'][0]} 
-Расход горячей воды: {prom['G'][0]} 
-Температура холодной воды на входе: {prom['t1'][0]} 
-Температура холодной воды на выходе: {prom['t2'][0]} 
-Расход холодной воды: {prom['g'][0]} \n
-Результаты расчета: \n
-{prom['N'][0]}
-''')
