@@ -18,6 +18,7 @@ t1 = random.randint(5, 15)
 t2 = random.randint(20, 35)
 g = random.randint(10, 50)
 G = random.randint(10, 50)
+
 #login = int(input('Введите login '))
 #number = int(input('Введите number '))
 #T1 = int(input('Введите температуру на входе горячего потока '))
@@ -26,6 +27,7 @@ G = random.randint(10, 50)
 #t2 = int(input('Введите температуру на выходе холодного потока '))
 #g = int(input('Введите расход холодной среды '))
 #G = int(input('Введите расход горячей среды '))
+
 API_URL='http://localhost:8000/dashboard'
 data = {'login': login, 'number': number, 't1': t1, 't2': t2, 'T1': T1, 'T2': T2, 'g': g, 'G': G}
 result = requests.post(API_URL,params = data)
