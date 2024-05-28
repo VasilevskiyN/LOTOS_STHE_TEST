@@ -1,5 +1,19 @@
 import requests
 import random
+import string
+from datetime import datetime
+
+
+def generate_random_text(length=10):
+    letters = string.ascii_letters + ' '
+    return ''.join(random.choice(letters) for i in range(length))
+
+
+def print_current_time():
+    now = datetime.now()
+    time_string = now.strftime("%H:%M:%S")
+    return time_string
+
 
 login = 1455
 password = 19052013
@@ -12,6 +26,11 @@ check = requests.get(URL_LOGIN, params=data)
 result_text = check.json()['text']
 result_data = check.json()['result']
 if result_data == True:
+    TABL = int(input(f'''
+        Выберете рабочую таблицу: 
+            1) Heat Project
+            2) Heat Balance
+            '''))
     print(f'''
     Возможные действия с проектом: 
         1) Создать проект 
@@ -19,36 +38,22 @@ if result_data == True:
         3) Удалить проект
         ''')
     PROCESS = int(input("Введите номер действия с проектом: "))
-    if PROCESS == 1:
+    if PROCESS == 1 and TABL == 1:
         print('Введите данные')
-        # hp_id = int(input('Введите число id '))
-        # hp_uid = int(input('Введите  число uid '))
-        # hp_reports_count = int(input('Введите  число reports_count '))
-        # hp_array = str(input('Введите текст array '))
-        # hp_user_comment = str(input('Введите текст user_comment '))
-        # hp_datetime = str(input('Введите текст datetime '))
-        # hp_lastupd = str(input('Введите текст lastupd '))
-        # hp_username = str(input('Введите текст username '))
-        # hp_usercompany = str(input('Введите текст usercompany '))
-        # hp_jobid = int(input('Введите число jobid '))
-        # hp_hbid = int(input('Введите число hbid '))
-        # hp_hconstructionid = int(input('Введите число hconstructionid '))
-        # hp_status = int(input('Введите число status '))
-
         hp_id = random.randint(1, 1000)
-        hp_uid = 12
-        hp_reports_count = 12
-        hp_array = 'a'
-        hp_user_comment = 'a'
-        hp_datetime = 'a'
-        hp_lastupd = 'a'
-        hp_username = 'a'
-        hp_usercompany = 'a'
-        hp_jobid = 1
-        hp_hbid = 1
-        hp_hconstructionid = 1
-        hp_status = 1
-        URL_DATA = 'http://localhost:8000/create_project'
+        hp_uid = random.randint(1, 10)
+        hp_reports_count = random.randint(1, 15)
+        hp_array = generate_random_text(10)
+        hp_user_comment = generate_random_text(50)
+        hp_datetime = print_current_time()
+        hp_lastupd = generate_random_text(10)
+        hp_username = generate_random_text(5)
+        hp_usercompany = generate_random_text(10)
+        hp_jobid = random.randint(1, 10)
+        hp_hbid = random.randint(1, 10)
+        hp_hconstructionid = random.randint(1, 25)
+        hp_status = random.randint(1, 20)
+        URL_DATA = 'http://localhost:8000/heat_project/create_project'
         DATA_CREATE = {
             'hp_id': hp_id,
             'hp_uid': hp_uid,
@@ -67,7 +72,7 @@ if result_data == True:
         finish_create = requests.post(URL_DATA, params=DATA_CREATE)
         print(finish_create.text)
 
-    if PROCESS == 2:
+    if PROCESS == 2 and TABL == 1:
         hp_id = str(input('Введите id проекта для редактирования: '))
         print("Выберите строки для изменения знаком +")
         hp_uid_s = str(input('Значение uid '))
@@ -96,14 +101,87 @@ if result_data == True:
                                'name': name,
                                'value': value
                                }
-                URL_UPDATE = 'http://localhost:8000/update_project'
+                URL_UPDATE = 'http://localhost:8000/heat_project/update_project'
                 finish_update = requests.post(URL_UPDATE, params=DATA_UPDATE)
         print(finish_update.text)
 
-    if PROCESS == 3:
+    if PROCESS == 3 and TABL == 1:
         ID = int(input('Введите id проекта для удаления: '))
-        URL_DELETE = 'http://localhost:8000/delete_project'
+        URL_DELETE = 'http://localhost:8000/heat_project/delete_project'
         DATA_DELETE = {'id':ID}
         finish_delete = requests.get(URL_DELETE, params=DATA_DELETE)
         print(finish_delete.text)
 
+    if PROCESS == 1 and TABL == 2:
+        print('Введите данные')
+        hb_id = random.randint(1, 1000)
+        hb_type = random.randint(1, 10)
+        hb_hpid = random.randint(1, 15)
+        hb_uid = random.randint(1, 15)
+        hb_array = generate_random_text(50)
+        hb_user_comment = generate_random_text(10)
+        hb_datetime = generate_random_text(10)
+        hb_lastup = print_current_time()
+        hb_username = generate_random_text(10)
+        hb_Q = random.randint(1, 10)
+        hb_LMTD = random.randint(1, 10)
+        hb_status = random.randint(1, 25)
+        hb_props_array_bytes = random.randint(1, 20)
+        URL_DATA = 'http://localhost:8000/heat_balance/create_project'
+        DATA_CREATE = {
+            'hb_id': hb_id,
+            'hb_type': hb_type,
+            'hb_hpid': hb_hpid,
+            'hb_uid': hb_uid,
+            'hb_array': hb_array,
+            'hb_user_comment': hb_user_comment,
+            'hb_datetime': hb_datetime,
+            'hb_lastup': hb_lastup,
+            'hb_username': hb_username,
+            'hb_Q': hb_Q,
+            'hb_LMTD': hb_LMTD,
+            'hb_status': hb_status,
+            'hb_props_array_bytes': hb_props_array_bytes
+        }
+        finish_create = requests.post(URL_DATA, params=DATA_CREATE)
+        print(finish_create.text)
+
+    if PROCESS == 2 and TABL == 2:
+        hb_id = str(input('Введите id проекта для редактирования: '))
+        print("Выберите строки для изменения знаком +")
+        hb_type_s = str(input('Значение type '))
+        hb_hpid_s = str(input('Значение hpid '))
+        hb_uid_s = str(input('Значение  uid '))
+        hb_array_s = str(input('Значение  array '))
+        hb_user_comment_s = str(input('Значение  user_comment '))
+        hb_datetime_s = str(input('Значение  datetime '))
+        hb_lastup_s = str(input('Значение  lastup '))
+        hb_username_s = str(input('Значение  username '))
+        hb_Q_s = str(input('Значение Q '))
+        hb_LMTD_s = str(input('Значение  LMTD '))
+        hb_status_s = str(input('Значение status '))
+        hb_props_array_bytes_s = str(input('Значение  props_array_bytes '))
+        a = ['hb_type', 'hb_hpid', 'hb_uid', 'hb_array', 'hb_user_comment', 'hb_datetime',
+            'hb_lastup', 'hb_username', 'hb_Q', 'hb_LMTD', 'hb_status', 'hb_props_array_bytes']
+        b = [hb_type_s, hb_hpid_s, hb_uid_s, hb_array_s, hb_user_comment_s, hb_datetime_s,
+            hb_lastup_s, hb_username_s, hb_Q_s, hb_LMTD_s, hb_status_s, hb_props_array_bytes_s]
+        i = 0
+        print(b)
+        for i in range(len(b)):
+            if b[i] == '+':
+                name = a[i]
+                value = str(input(f'Введите {name} '))
+                DATA_UPDATE = {'hb_id':hb_id,
+                               'name': name,
+                               'value': value
+                               }
+                URL_UPDATE = 'http://localhost:8000/heat_balance/update_project'
+                finish_update = requests.post(URL_UPDATE, params=DATA_UPDATE)
+        print(finish_update.text)
+
+    if PROCESS == 3 and TABL == 2:
+        ID = int(input('Введите id проекта для удаления: '))
+        URL_DELETE = 'http://localhost:8000/heat_balance/delete_project'
+        DATA_DELETE = {'id':ID}
+        finish_delete = requests.get(URL_DELETE, params=DATA_DELETE)
+        print(finish_delete.text)
