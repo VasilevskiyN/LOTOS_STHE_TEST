@@ -26,11 +26,13 @@ check = requests.get(URL_LOGIN, params=data)
 result_text = check.json()['text']
 result_data = check.json()['result']
 if result_data == True:
-    TABL = int(input(f'''
+    print(f'''
         Выберете рабочую таблицу: 
             1) Heat Project
             2) Heat Balance
-            '''))
+            3) Heat Construction
+            ''')
+    TABL = int(input("Работаем с таблицей № "))
     print(f'''
     Возможные действия с проектом: 
         1) Создать проект 
@@ -182,6 +184,65 @@ if result_data == True:
     if PROCESS == 3 and TABL == 2:
         ID = int(input('Введите id проекта для удаления: '))
         URL_DELETE = 'http://localhost:8000/heat_balance/delete_project'
+        DATA_DELETE = {'id':ID}
+        finish_delete = requests.get(URL_DELETE, params=DATA_DELETE)
+        print(finish_delete.text)
+
+    if PROCESS == 1 and TABL == 3:
+        print('Введите данные')
+        hconstruction_id = random.randint(1, 1000)
+        hconstruction_hpid = random.randint(1, 15)
+        hconstruction_name = generate_random_text(10)
+        hconstruction_uid = generate_random_text(10)
+        hconstruction_array = generate_random_text(10)
+        hconstruction_datetime = print_current_time()
+        hconstruction_username = generate_random_text(10)
+        hconstruction_status = random.randint(1, 25)
+        URL_DATA = 'http://localhost:8000/heat_construction/create_project'
+        DATA_CREATE = {
+            'hconstruction_id': hconstruction_id,
+            'hconstruction_hpid': hconstruction_hpid,
+            'hconstruction_name': hconstruction_name,
+            'hconstruction_uid': hconstruction_uid,
+            'hconstruction_array': hconstruction_array,
+            'hconstruction_datetime': hconstruction_datetime,
+            'hconstruction_username': hconstruction_username,
+            'hconstruction_status': hconstruction_status
+        }
+        finish_create = requests.post(URL_DATA, params=DATA_CREATE)
+        print(finish_create.text)
+
+    if PROCESS == 2 and TABL == 3:
+        hconstruction_id = str(input('Введите id проекта для редактирования: '))
+        print("Выберите строки для изменения знаком +")
+        hconstruction_hpid_s = str(input('Значение type '))
+        hconstruction_name_s = str(input('Значение hpid '))
+        hconstruction_uid_s = str(input('Значение  uid '))
+        hconstruction_array_s = str(input('Значение  array '))
+        hconstruction_datetime_s = str(input('Значение  user_comment '))
+        hconstruction_username_s = str(input('Значение  datetime '))
+        hconstruction_status_s = str(input('Значение  lastup '))
+        a = ['hconstruction_hpid', 'hconstruction_name', 'hconstruction_uid', 'hconstruction_array',
+             'hconstruction_datetime', 'hconstruction_username', 'hconstruction_status']
+        b = [hconstruction_hpid_s, hconstruction_name_s, hconstruction_uid_s, hconstruction_array_s,
+             hconstruction_datetime_s, hconstruction_username_s, hconstruction_status_s]
+        i = 0
+        print(b)
+        for i in range(len(b)):
+            if b[i] == '+':
+                name = a[i]
+                value = str(input(f'Введите {name} '))
+                DATA_UPDATE = {'hconstruction_id':hconstruction_id,
+                               'name': name,
+                               'value': value
+                               }
+                URL_UPDATE = 'http://localhost:8000/heat_construction/update_project'
+                finish_update = requests.post(URL_UPDATE, params=DATA_UPDATE)
+        print(finish_update.text)
+
+    if PROCESS == 3 and TABL == 3:
+        ID = int(input('Введите id проекта для удаления: '))
+        URL_DELETE = 'http://localhost:8000/heat_construction/delete_project'
         DATA_DELETE = {'id':ID}
         finish_delete = requests.get(URL_DELETE, params=DATA_DELETE)
         print(finish_delete.text)
