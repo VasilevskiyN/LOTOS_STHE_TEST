@@ -2,6 +2,7 @@ import requests
 import random
 import string
 from datetime import datetime
+import sys
 
 
 def generate_random_text(length=10):
@@ -33,11 +34,21 @@ if result_data == True:
             3) Heat Construction
             ''')
     TABL = int(input("Работаем с таблицей № "))
+
+    if TABL == 2 or TABL == 3:
+        id_project = int(input('Введите ID проекта '))
+        URL_CHECK = 'http://localhost:8000/check_project'
+        data_check = {'id_project':id_project}
+        check = requests.get(URL_CHECK, params=data_check)
+        if check.text != '1':
+            print("Проекта с таким id не существует")
+            sys.exit(0)
+
     print(f'''
-    Возможные действия с проектом: 
-        1) Создать проект 
-        2) Редактировать проект 
-        3) Удалить проект
+    Возможные действия с таблицей: 
+        1) Создать строку
+        2) Редактировать строку 
+        3) Удалить строку
         ''')
     PROCESS = int(input("Введите номер действия с проектом: "))
     if PROCESS == 1 and TABL == 1:
@@ -118,7 +129,7 @@ if result_data == True:
         print('Введите данные')
         hb_id = random.randint(1, 1000)
         hb_type = random.randint(1, 10)
-        hb_hpid = random.randint(1, 15)
+        hb_hpid = id_project
         hb_uid = random.randint(1, 15)
         hb_array = generate_random_text(50)
         hb_user_comment = generate_random_text(10)
@@ -149,10 +160,9 @@ if result_data == True:
         print(finish_create.text)
 
     if PROCESS == 2 and TABL == 2:
-        hb_id = str(input('Введите id проекта для редактирования: '))
+        hb_id = str(input('Введите id строки для редактирования: '))
         print("Выберите строки для изменения знаком +")
         hb_type_s = str(input('Значение type '))
-        hb_hpid_s = str(input('Значение hpid '))
         hb_uid_s = str(input('Значение  uid '))
         hb_array_s = str(input('Значение  array '))
         hb_user_comment_s = str(input('Значение  user_comment '))
@@ -163,9 +173,9 @@ if result_data == True:
         hb_LMTD_s = str(input('Значение  LMTD '))
         hb_status_s = str(input('Значение status '))
         hb_props_array_bytes_s = str(input('Значение  props_array_bytes '))
-        a = ['hb_type', 'hb_hpid', 'hb_uid', 'hb_array', 'hb_user_comment', 'hb_datetime',
+        a = ['hb_type', 'hb_uid', 'hb_array', 'hb_user_comment', 'hb_datetime',
             'hb_lastup', 'hb_username', 'hb_Q', 'hb_LMTD', 'hb_status', 'hb_props_array_bytes']
-        b = [hb_type_s, hb_hpid_s, hb_uid_s, hb_array_s, hb_user_comment_s, hb_datetime_s,
+        b = [hb_type_s, hb_uid_s, hb_array_s, hb_user_comment_s, hb_datetime_s,
             hb_lastup_s, hb_username_s, hb_Q_s, hb_LMTD_s, hb_status_s, hb_props_array_bytes_s]
         i = 0
         print(b)
@@ -182,7 +192,7 @@ if result_data == True:
         print(finish_update.text)
 
     if PROCESS == 3 and TABL == 2:
-        ID = int(input('Введите id проекта для удаления: '))
+        ID = int(input('Введите id строки для удаления: '))
         URL_DELETE = 'http://localhost:8000/heat_balance/delete_project'
         DATA_DELETE = {'id':ID}
         finish_delete = requests.get(URL_DELETE, params=DATA_DELETE)
@@ -191,7 +201,7 @@ if result_data == True:
     if PROCESS == 1 and TABL == 3:
         print('Введите данные')
         hconstruction_id = random.randint(1, 1000)
-        hconstruction_hpid = random.randint(1, 15)
+        hconstruction_hpid = id_project
         hconstruction_name = generate_random_text(10)
         hconstruction_uid = generate_random_text(10)
         hconstruction_array = generate_random_text(10)
@@ -213,18 +223,17 @@ if result_data == True:
         print(finish_create.text)
 
     if PROCESS == 2 and TABL == 3:
-        hconstruction_id = str(input('Введите id проекта для редактирования: '))
+        hconstruction_id = str(input('Введите id строки для редактирования: '))
         print("Выберите строки для изменения знаком +")
-        hconstruction_hpid_s = str(input('Значение type '))
-        hconstruction_name_s = str(input('Значение hpid '))
+        hconstruction_name_s = str(input('Значение name '))
         hconstruction_uid_s = str(input('Значение  uid '))
         hconstruction_array_s = str(input('Значение  array '))
         hconstruction_datetime_s = str(input('Значение  user_comment '))
         hconstruction_username_s = str(input('Значение  datetime '))
         hconstruction_status_s = str(input('Значение  lastup '))
-        a = ['hconstruction_hpid', 'hconstruction_name', 'hconstruction_uid', 'hconstruction_array',
+        a = ['hconstruction_name', 'hconstruction_uid', 'hconstruction_array',
              'hconstruction_datetime', 'hconstruction_username', 'hconstruction_status']
-        b = [hconstruction_hpid_s, hconstruction_name_s, hconstruction_uid_s, hconstruction_array_s,
+        b = [hconstruction_name_s, hconstruction_uid_s, hconstruction_array_s,
              hconstruction_datetime_s, hconstruction_username_s, hconstruction_status_s]
         i = 0
         print(b)
@@ -241,7 +250,7 @@ if result_data == True:
         print(finish_update.text)
 
     if PROCESS == 3 and TABL == 3:
-        ID = int(input('Введите id проекта для удаления: '))
+        ID = int(input('Введите id строки для удаления: '))
         URL_DELETE = 'http://localhost:8000/heat_construction/delete_project'
         DATA_DELETE = {'id':ID}
         finish_delete = requests.get(URL_DELETE, params=DATA_DELETE)
