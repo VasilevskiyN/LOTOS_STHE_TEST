@@ -3,7 +3,7 @@ import time
 
 UUID = str(input('Введите номер задачи '))
 print(UUID)
-API_URL1 = f'http://localhost:8000/task_status?task_id={UUID}'
+API_URL1 = f'http://192.168.1.145/8000/task_status?task_id={UUID}'
 result1 = requests.get(API_URL1)
 print(result1)
 prom = result1.json()
