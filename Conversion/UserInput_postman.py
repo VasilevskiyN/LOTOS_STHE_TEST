@@ -40,7 +40,7 @@ v2 = {
             "hot": {
                 "flow_name": "50% р-р пропиленгликоля",         # Name of hot flow, don't used in calculation
                 "t_in": 90,                          # Inlet temperature for hot fluid, °С
-                "t_out": 7,                          # Outlet temperature for hot fluid, °С
+                "t_out": 70,                          # Outlet temperature for hot fluid, °С
                 "P_ab": 701.325,                     # Inlet total pressure, kPa
                 "G": 4176,                           # Mass flow rate for hot fluid, kg/hour
                 "components": [                      # You can specify any number of components
