@@ -39,22 +39,22 @@ v2 = {
 
             "hot": {
                 "flow_name": "50% р-р пропиленгликоля",         # Name of hot flow, don't used in calculation
-                "t_in": 90,                           # Inlet temperature for hot fluid, °С
+                "t_in": 90,                          # Inlet temperature for hot fluid, °С
                 "t_out": 7,                          # Outlet temperature for hot fluid, °С
                 "P_ab": 701.325,                     # Inlet total pressure, kPa
-                "G": 4176,                            # Mass flow rate for hot fluid, kg/hour
-                "components": [                       # You can specify any number of components
+                "G": 4176,                           # Mass flow rate for hot fluid, kg/hour
+                "components": [                      # You can specify any number of components
                     {
                         "name": "12-C3diol / 1;2-Propylene_Glycol / C3H8O2", # Name component
                         "fraction": 0.5             # Fraction this component
                     },
                     {
-                        "name": "H2O / H2O / H2O", # Name component
+                        "name": "H2O / H2O / H2O",  # Name component
                         "fraction": 0.5             # Fraction this component
                     },
                 ],
-                "property_package": "prsv",           # Property Generation Package
-                "fraction_type": "mass",              # Fraction type: mass or mole
+                "property_package": "glycolpkg",     # Property Generation Package
+                "fraction_type": "mass",             # Fraction type: mass or mole
                 "vacuum_distillation": [                        # It is used in devices of the petrochemical industry,
                                                                 # specify the temperatures at which the yield
                                                                 # of volatile substances is known.The concentration
