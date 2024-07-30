@@ -45,8 +45,8 @@ v2 = {
                 "G": 4176,                           # Mass flow rate for hot fluid, kg/hour
                 "components": [                      # You can specify any number of components
                     {
-                        "name": "12-C3diol / 1;2-Propylene_Glycol / C3H8O2", # Name component
-                        "fraction": 0.5             # Fraction this component
+                        "name": "12-C3diol / 1;2-Propylene_Glycol / C3H8O2",  # Name component
+                        "fraction": 0.5                                       # Fraction this component
                     },
                     {
                         "name": "H2O / H2O / H2O",  # Name component
@@ -55,13 +55,13 @@ v2 = {
                 ],
                 "property_package": "glycolpkg",     # Property Generation Package
                 "fraction_type": "mass",             # Fraction type: mass or mole
-                "vacuum_distillation": [                        # It is used in devices of the petrochemical industry,
+                "vacuum_distillation": []                       # It is used in devices of the petrochemical industry,
                                                                 # specify the temperatures at which the yield
                                                                 # of volatile substances is known.The concentration
                                                                 # of boiled components should be indicated
                                                                 # relative to the completely liquid phase.
                                                                 # The temperature is indicated in °С,
-                ]                                               # fraction is indicated in mass fraction.
+                                                                # fraction is indicated in mass fraction.
                                                                 # You can specify any number of points.
             }
         }
